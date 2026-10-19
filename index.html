@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#08111f">
+  <meta name="description" content="ARACASH POS - kasir offline">
+  <title>ARACASH POS</title>
+  <link rel="manifest" href="/manifest.webmanifest">
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar">
+      <div class="brand"><div class="brand-mark">A</div><div><b>ARA<span>CASH</span></b><small>SMART POS</small></div></div>
+      <div class="nav-label">WORKSPACE</div>
+      <button class="nav active" data-page="dashboard">▦ <span>Dashboard</span></button>
+      <button class="nav" data-page="kasir">▣ <span>Kasir</span></button>
+      <button class="nav" data-page="produk">▤ <span>Produk & Stok</span></button>
+      <button class="nav" data-page="transaksi">◷ <span>Transaksi</span></button>
+      <button class="nav" data-page="laporan">⌁ <span>Laporan</span></button>
+      <button class="nav" data-page="pengaturan">⚙ <span>Pengaturan</span></button>
+      <div class="sidebar-bottom"><span class="online-dot"></span> Mode lokal · Offline-first</div>
+    </aside>
+    <main class="main">
+      <header class="topbar">
+        <div><div class="eyebrow">POINT OF SALE / INDONESIA</div><h1 id="page-title">Dashboard</h1></div>
+        <div class="top-actions"><span class="date-pill" id="today"></span><button class="avatar" title="ARACASH">A</button></div>
+      </header>
+      <section id="page-dashboard" class="page active">
+        <div class="welcome"><div><p class="eyebrow">RINGKASAN TOKO</p><h2>Bisnis lebih terkontrol.<br><span>Setiap transaksi berarti.</span></h2><p class="muted">Pantau penjualan dan kelola produk dari satu tempat.</p></div><div class="hero-orb">A<span>+</span></div></div>
+        <div class="stat-grid">
+          <article class="stat-card"><div class="stat-head">Penjualan hari ini <span>↗</span></div><strong id="stat-sales">Rp0</strong><small>Total transaksi tersimpan</small></article>
+          <article class="stat-card"><div class="stat-head">Transaksi <span>▣</span></div><strong id="stat-count">0</strong><small>Transaksi hari ini</small></article>
+          <article class="stat-card"><div class="stat-head">Produk aktif <span>▤</span></div><strong id="stat-products">0</strong><small>Item dalam katalog</small></article>
+          <article class="stat-card"><div class="stat-head">Stok menipis <span>!</span></div><strong id="stat-low">0</strong><small>Perlu diperiksa</small></article>
+        </div>
+        <div class="content-grid">
+          <article class="panel"><div class="panel-title"><div><h3>Transaksi terbaru</h3><p class="muted">Aktivitas penjualan tersimpan di perangkat ini</p></div><button class="text-btn" data-go="transaksi">Lihat semua →</button></div><div id="recent-list" class="empty-state">Belum ada transaksi. Mulai dari menu Kasir.</div></article>
+          <article class="panel quick-panel"><div class="panel-title"><div><h3>Akses cepat</h3><p class="muted">Mulai pekerjaan utama</p></div></div><button class="quick-action" data-go="kasir"><span class="quick-icon">＋</span><span><b>Transaksi baru</b><small>Buka layar kasir</small></span><i>→</i></button><button class="quick-action" data-go="produk"><span class="quick-icon">▤</span><span><b>Tambah produk</b><small>Kelola katalog barang</small></span><i>→</i></button><button class="quick-action" id="backup-btn"><span class="quick-icon">⇩</span><span><b>Backup data</b><small>Unduh cadangan JSON</small></span><i>→</i></button></article>
+        </div>
+        <p class="disclaimer">Versi fondasi: sebelum dipakai untuk usaha sungguhan, pastikan data dicadangkan. Tahap berikutnya adalah integrasi SQLite native dan APK Android.</p>
+      </section>
+      <section id="page-kasir" class="page">
+        <div class="two-col">
+          <article class="panel"><div class="panel-title"><div><h3>Katalog produk</h3><p class="muted">Pilih barang untuk menambahkan ke keranjang</p></div></div><input id="product-search" class="input" placeholder="Cari nama atau SKU produk..."><div id="catalog" class="catalog"></div></article>
+          <article class="panel cart-panel"><div class="panel-title"><div><h3>Keranjang</h3><p class="muted">Periksa pesanan sebelum pembayaran</p></div><button id="clear-cart" class="text-btn">Kosongkan</button></div><div id="cart-items" class="cart-items empty-state">Belum ada barang di keranjang.</div><div class="checkout"><label>Diskon transaksi (Rp)<input id="cart-discount" class="input" type="number" min="0" value="0"></label><div class="total-row"><span>Subtotal</span><b id="cart-subtotal">Rp0</b></div><div class="total-row grand"><span>Total</span><b id="cart-total">Rp0</b></div><label>Metode pembayaran<select id="pay-method" class="input"><option>Tunai</option><option>Transfer bank</option><option>QRIS manual</option><option>Debit</option><option>Piutang</option></select></label><label>Uang diterima (Rp)<input id="cash-received" class="input" type="number" min="0" placeholder="Masukkan pembayaran"></label><div class="total-row"><span>Kembalian</span><b id="change">Rp0</b></div><button id="complete-sale" class="primary-btn full">Selesaikan transaksi</button></div></article>
+        </div>
+      </section>
+      <section id="page-produk" class="page">
+        <article class="panel"><div class="panel-title"><div><h3>Manajemen produk</h3><p class="muted">Katalog lokal ARACASH</p></div><button id="add-product" class="primary-btn">＋ Tambah produk</button></div><div class="table-wrap"><table><thead><tr><th>Produk</th><th>SKU</th><th>Harga beli</th><th>Harga jual</th><th>Stok</th><th>Aksi</th></tr></thead><tbody id="product-table"></tbody></table></div></article>
+      </section>
+      <section id="page-transaksi" class="page">
+        <article class="panel"><div class="panel-title"><div><h3>Riwayat transaksi</h3><p class="muted">Transaksi yang tersimpan pada perangkat ini</p></div><button id="export-csv" class="secondary-btn">Ekspor CSV</button></div><div class="table-wrap"><table><thead><tr><th>No. transaksi</th><th>Tanggal</th><th>Item</th><th>Pembayaran</th><th>Total</th></tr></thead><tbody id="transaction-table"></tbody></table></div></article>
+      </section>
+      <section id="page-laporan" class="page">
+        <div class="stat-grid"><article class="stat-card"><div class="stat-head">Total penjualan</div><strong id="report-sales">Rp0</strong><small>Semua transaksi tersimpan</small></article><article class="stat-card"><div class="stat-head">Estimasi laba kotor</div><strong id="report-profit">Rp0</strong><small>Harga jual dikurangi modal barang</small></article><article class="stat-card"><div class="stat-head">Total transaksi</div><strong id="report-count">0</strong><small>Semua periode</small></article></div>
+        <article class="panel"><h3>Ringkasan</h3><p class="muted">Laporan saat ini merupakan ringkasan transaksi yang tercatat. Pajak, retur, biaya operasional, dan penyesuaian akuntansi belum dimasukkan.</p><div id="report-summary"></div></article>
+      </section>
+      <section id="page-pengaturan" class="page">
+        <article class="panel settings-panel"><h3>Pengaturan toko</h3><p class="muted">Identitas lokal ARACASH POS</p><label>Nama toko<input id="store-name" class="input" placeholder="Nama toko Anda"></label><label>Nama kasir<input id="cashier-name" class="input" placeholder="Nama kasir"></label><label>Logo / simbol singkat<input id="store-logo" class="input" maxlength="3" placeholder="ARA"></label><button id="save-settings" class="primary-btn">Simpan pengaturan</button><hr><h3>Backup & pemulihan</h3><p class="muted">Simpan cadangan secara berkala. File backup berisi data produk dan transaksi.</p><div class="button-row"><button id="backup-btn-2" class="secondary-btn">Unduh backup JSON</button><label class="file-button">Pulihkan backup JSON<input id="restore-file" type="file" accept=".json,application/json" hidden></label></div><p class="warning">Peringatan: versi awal ini menggunakan penyimpanan browser. Jangan menghapus data browser sebelum membuat backup.</p></article>
+      </section>
+    </main>
+  </div>
+  <dialog id="product-dialog"><form method="dialog" id="product-form"><div class="dialog-head"><h3 id="dialog-title">Tambah produk</h3><button class="icon-btn" value="cancel" aria-label="Tutup">×</button></div><input type="hidden" id="edit-id"><label>Nama produk<input class="input" id="p-name" required maxlength="100"></label><label>SKU / barcode<input class="input" id="p-sku" maxlength="60"></label><div class="form-grid"><label>Harga beli<input class="input" id="p-cost" type="number" min="0" required></label><label>Harga jual<input class="input" id="p-price" type="number" min="0" required></label><label>Stok<input class="input" id="p-stock" type="number" min="0" required></label><label>Stok minimum<input class="input" id="p-min" type="number" min="0" required value="5"></label></div><div class="button-row"><button type="button" id="delete-product" class="danger-btn">Hapus</button><button type="submit" class="primary-btn">Simpan produk</button></div></form></dialog>
+  <div id="toast" class="toast" role="status"></div>
+  <script type="module" src="/app.js"></script>
+</body>
+</html>
