@@ -1,0 +1,6 @@
+{
+  "appId": "id.aracash.pos",
+  "appName": "ARACASH POS",
+  "webDir": "dist",
+  "bundledWebRuntime": false
+}
